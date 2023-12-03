@@ -23,11 +23,11 @@ export class User {
     @Column({ default: true })
     isActive: boolean;
 
-    @Column({
-        type: 'text',
-        default: 'consumidor'
+    @Column("text", {
+        array: true,
+        default: ['consumidor']
     })
-    role: string;
+    roles: string[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
