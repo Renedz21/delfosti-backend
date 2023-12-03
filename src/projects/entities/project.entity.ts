@@ -8,10 +8,10 @@ export class Project {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column("text")
     nombre: string;
 
-    @Column()
+    @Column("text")
     descripcion: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -25,7 +25,7 @@ export class Project {
 
     @OneToMany(
         () => Task,
-        tarea => tarea.proyecto,
+        tarea => tarea.proyectoId,
         { cascade: true }
     )
     tareas: Task[];

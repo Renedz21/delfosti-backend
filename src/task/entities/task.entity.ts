@@ -1,6 +1,6 @@
 
 import { Project } from "src/projects/entities/project.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tasks')
 export class Task {
@@ -17,16 +17,29 @@ export class Task {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     fechaCreacion: Date;
 
-    @Column({ default: false })
-    enProgreso: boolean;
-
-    @Column({ default: false })
-    completada: boolean;
+    @Column({
+        default: 'pendiente',
+    })
+    estatus: string;
 
     @ManyToOne(
         () => Project,
         proyecto => proyecto.tareas
     )
-    proyecto: Project;
+    proyectoId: Project;
+
+    @BeforeInsert()
+    checkField() {
+        this.estatus = this.estatus.toLowerCase()
+            .trim()
+            .replaceAll(' ', '_');
+    }
+
+    @BeforeUpdate()
+    setStatus() {
+        this.estatus = this.estatus.toLowerCase()
+            .trim()
+            .replaceAll(' ', '_');
+    }
 
 }
