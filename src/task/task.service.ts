@@ -65,7 +65,7 @@ export class TaskService {
 
   async changeTaskStatus(taskId: string, body: any) {
     try {
-
+      console.log(body);
       const { status } = body;
 
       const tarea = await this.taskRepository.findOne({

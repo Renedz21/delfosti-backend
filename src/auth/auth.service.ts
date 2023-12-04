@@ -53,7 +53,7 @@ export class AuthService {
         where: {
           email
         },
-        select: { email: true, password: true, id: true }
+        select: { id: true, email: true, name: true, password: true, roles: true }
       });
 
       if (!user) {
@@ -66,8 +66,12 @@ export class AuthService {
         throw new UnauthorizedException('Contraseña incorrecta')
       }
 
+      delete user.password;
+
       return {
-        ...user,
+        user: {
+          ...user
+        },
         token: this.getJwtToken({ id: user.id }),
       }
 

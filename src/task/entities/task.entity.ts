@@ -1,6 +1,6 @@
 
 import { Project } from "src/projects/entities/project.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('tasks')
 export class Task {
@@ -27,13 +27,6 @@ export class Task {
         proyecto => proyecto.tareas
     )
     proyectoId: Project;
-
-    @BeforeInsert()
-    checkField() {
-        this.estatus = this.estatus.toLowerCase()
-            .trim()
-            .replaceAll(' ', '_');
-    }
 
     @BeforeUpdate()
     setStatus() {

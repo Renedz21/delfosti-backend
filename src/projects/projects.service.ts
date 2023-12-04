@@ -27,17 +27,28 @@ export class ProjectsService {
 
   async findAll() {
     try {
-      const projects = await this.projectRepository.find({
-        relations: ['usuario', 'tareas']
-      });
+      const projects = await this.projectRepository.find();
       return projects;
     } catch (error) {
       console.log(error);
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
+  async findOne(id: string) {
+    try {
+
+      const project = await this.projectRepository.findOne({
+        where: {
+          id
+        },
+        relations: ['tareas']
+      });
+
+      return project;
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   update(id: number, updateProjectDto: UpdateProjectDto) {
